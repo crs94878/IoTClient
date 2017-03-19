@@ -16,10 +16,11 @@ namespace IoTClient
     class ConnectToBroker
     {
         MqttClient client;
+        Thread clientThread;
         string  BrokerNameOfHost;
         int brokerPort;
         string iDClient;
-        string UserName
+        string UserName;
         string pass;
         /// <summary>
         /// Конструктор класса <see cref="ConnectToBroker" /> class.
@@ -30,9 +31,9 @@ namespace IoTClient
         /// <param name="ID">ID польвателя.</param>
         /// <param name="passwordConnect">Пароль для подключению к брокеру.</param>
         public ConnectToBroker(string NameBroker, string User,
-                    int portBroker, string ID,
-                    string passwordConnect)
+                    int portBroker, string ID,string passwordConnect)
         {
+            //clientThread=new Thread(); допилить ммногопоточность
             BrokerNameOfHost = NameBroker;
             brokerPort = portBroker;
             UserName = User;
