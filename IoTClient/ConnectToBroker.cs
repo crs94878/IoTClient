@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt;
 
+
 namespace IoTClient
 {
     /// <summary>
@@ -15,6 +16,7 @@ namespace IoTClient
     /// </summary>
     class ConnectToBroker
     {
+
         MqttClient client;
         Thread clientThread;
         string  BrokerNameOfHost;
@@ -22,6 +24,7 @@ namespace IoTClient
         string iDClient;
         string UserName;
         string pass;
+
         /// <summary>
         /// Конструктор класса <see cref="ConnectToBroker" /> class.
         /// </summary>
@@ -39,8 +42,10 @@ namespace IoTClient
             UserName = User;
             iDClient = ID;
             pass = passwordConnect;
-            client = new MqttClient(BrokerNameOfHost);
+            client = new MqttClient(BrokerNameOfHost,brokerPort,false,null,null,MqttSslProtocols.None);
         }
+
+
         /// <summary>
         /// Подключается к брокеру.
         /// </summary>
@@ -48,14 +53,41 @@ namespace IoTClient
         /// Если нет то возвращается false.</returns>
         public bool StartConnect()
         {
-            client.Connect(iDClient, UserName, pass);
-            if (client.IsConnected)
+            try
             {
-                return true;
+                client.Connect(iDClient, UserName, pass);
+                if (client.IsConnected)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (uPLibrary.Networking.M2Mqtt.Exceptions.MqttCommunicationException ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+             return false; 
+        }
+        /// <summary>
+        /// Функция слушает брокера. Если в топике появляется новое сообщение от другого клиента,
+        /// то получаем сообщение.
+        /// </summary>
+        public void ReciveMessage()
+        {
+            if (StartConnect() == true)
+            {
+                //while (true)
+                //{
+
+                //}
+                System.Windows.Forms.MessageBox.Show("Урааа подключились к брокеру");
             }
             else
             {
-                return false;
+                System.Windows.Forms.MessageBox.Show("Не подключен к брокеру");
             }
         }
     }

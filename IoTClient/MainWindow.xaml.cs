@@ -24,5 +24,12 @@ namespace IoTClient
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectToBroker ConnectClient = new ConnectToBroker(BrokerURITextBox.Text, UserNameTextBox.Text,
+                Convert.ToInt32(BrokerPortTextBox.Text), "1", PasswordTextBox.Text);
+            ConnectClient.ReciveMessage();
+        }
     }
 }

@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Content="Button" HorizontalAlignment="Left" Margin="256,252,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="BrokerURITextBox" HorizontalAlignment="Left" Height="23" Margin="146,47,0,0" TextWrapping="Wrap" Text="Введите адрес брокера..." VerticalAlignment="Top" Width="167"/>
+        <TextBox x:Name="UserNameTextBox" HorizontalAlignment="Left" Height="23" Margin="146,91,0,0" TextWrapping="Wrap" Text="Введите имя пользователя..." VerticalAlignment="Top" Width="167"/>
+        <TextBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Height="23" Margin="146,129,0,0" TextWrapping="Wrap" Text="Введите пароль..." VerticalAlignment="Top" Width="167"/>
+        <TextBox x:Name="BrokerPortTextBox" HorizontalAlignment="Left" Height="23" Margin="318,47,0,0" TextWrapping="Wrap" Text="Введите порт..." VerticalAlignment="Top" Width="120"/>
+
     </Grid>
 </Window>
