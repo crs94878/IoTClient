@@ -29,7 +29,11 @@ namespace IoTClient
         {
 
         }
-
+        /// <summary>
+        ///При загрузке окна сразу загружает окно авторизации на брокере.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ConWind.ConnectWindow ConnectWindowToBroker = new ConWind.ConnectWindow();
