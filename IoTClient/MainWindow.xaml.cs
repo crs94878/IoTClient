@@ -39,5 +39,13 @@ namespace IoTClient
             ConWind.ConnectWindow ConnectWindowToBroker = new ConWind.ConnectWindow();
             ConnectWindowToBroker.ShowDialog();
         }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string topic="home/ClientCommandTopic.LedArduino";
+            ConWind.ConnectWindow.NewConnect.SendMessage(topic,SendMessageTextBox.Text);
+            TalkToIoTtextBox.Text += DateTime.Now.ToString() + ": " + SendMessageTextBox.Text+"\n";
+
+        }
     }
 }

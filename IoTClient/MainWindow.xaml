@@ -8,7 +8,7 @@
         Title="MainWindow" Height="355" Width="650" Loaded="Window_Loaded">
     <Grid>
         <TextBox x:Name="SendMessageTextBox" HorizontalAlignment="Left" Height="58" Margin="10,256,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
-        <Button x:Name="SendButton" Content="Button" HorizontalAlignment="Left" Margin="552,256,0,0" VerticalAlignment="Top" Width="75" Height="58"/>
-        <TextBox HorizontalAlignment="Left" Height="214" Margin="10,37,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="537"/>
+        <Button x:Name="SendButton" Content="Button" HorizontalAlignment="Left" Margin="552,256,0,0" VerticalAlignment="Top" Width="75" Height="58" Click="SendButton_Click"/>
+        <TextBox x:Name="TalkToIoTtextBox" HorizontalAlignment="Left" Height="214" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
     </Grid>
 </Window>

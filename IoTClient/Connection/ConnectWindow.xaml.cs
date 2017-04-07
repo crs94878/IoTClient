@@ -19,7 +19,7 @@ namespace IoTClient.ConWind
     /// </summary>
     public partial class ConnectWindow : Window
     {
-        public ConnectToBroker NewConnect;
+        public static ConnectToBroker NewConnect;
         Random randId=new Random((int)DateTime.Now.Ticks);
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectWindow"/> class.

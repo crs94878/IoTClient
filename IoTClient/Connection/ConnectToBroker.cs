@@ -75,6 +75,7 @@ namespace IoTClient
             if (client.IsConnected == true)
             {
                 byte[] message = new byte[Published.Length];
+                message = Encoding.UTF8.GetBytes(Published);
                 client.Publish(Topic, message);
             }
             else
@@ -82,9 +83,7 @@ namespace IoTClient
                 System.Windows.Forms.MessageBox.Show("Вы не подлкючены к брокеру. Подключитесь.");
                 this.StartConnect();
             }
-        }
-        
-        
+        }       
     }
            
 }
