@@ -7,6 +7,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 
 namespace IoTClient
@@ -14,16 +15,16 @@ namespace IoTClient
     /// <summary>
     /// Класс подключается к выбранному брокеру
     /// </summary>
-    class ConnectToBroker
+   public class ConnectToBroker
     {
-
-        MqttClient client;
+       public MqttClient client;
         Thread clientThread;
-        string  BrokerNameOfHost;
+        string BrokerNameOfHost;
         int brokerPort;
         string iDClient;
         string UserName;
         string pass;
+        public bool IsConnect = false;
 
         /// <summary>
         /// Конструктор класса <see cref="ConnectToBroker" /> class.
@@ -34,7 +35,7 @@ namespace IoTClient
         /// <param name="ID">ID польвателя.</param>
         /// <param name="passwordConnect">Пароль для подключению к брокеру.</param>
         public ConnectToBroker(string NameBroker, string User,
-                    int portBroker, string ID,string passwordConnect)
+                    int portBroker, string ID, string passwordConnect)
         {
             //clientThread=new Thread(); допилить ммногопоточность
             BrokerNameOfHost = NameBroker;
@@ -42,7 +43,7 @@ namespace IoTClient
             UserName = User;
             iDClient = ID;
             pass = passwordConnect;
-            client = new MqttClient(BrokerNameOfHost,brokerPort,false,null,null,MqttSslProtocols.None);
+            client = new MqttClient(BrokerNameOfHost, brokerPort, false, null, null, MqttSslProtocols.None);
         }
 
 
@@ -51,44 +52,39 @@ namespace IoTClient
         /// </summary>
         /// <returns>Если подлючился возвращает логическое true,
         /// Если нет то возвращается false.</returns>
-        public bool StartConnect()
+        public void StartConnect()
         {
             try
             {
                 client.Connect(iDClient, UserName, pass);
-                if (client.IsConnected)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (uPLibrary.Networking.M2Mqtt.Exceptions.MqttCommunicationException ex)
             {
+                System.Windows.Forms.MessageBox.Show("Не удалось подключиться." +
+                    "Причина:");
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
-             return false; 
         }
         /// <summary>
-        /// Функция слушает брокера. Если в топике появляется новое сообщение от другого клиента,
-        /// то получаем сообщение.
+        /// Фукция отправляет публикацию сообщения на Topic брокеру.
         /// </summary>
-        public void ReciveMessage()
+        /// <param name="Topic">Topic</param>
+        /// <param name="Published">Публикация.</param>
+        public void SendMessage(string Topic,string Published)
         {
-            if (StartConnect() == true)
+            if (client.IsConnected == true)
             {
-                //while (true)
-                //{
-
-                //}
-                System.Windows.Forms.MessageBox.Show("Урааа подключились к брокеру");
+                byte[] message = new byte[Published.Length];
+                client.Publish(Topic, message);
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Не подключен к брокеру");
+                System.Windows.Forms.MessageBox.Show("Вы не подлкючены к брокеру. Подключитесь.");
+                this.StartConnect();
             }
         }
+        
+        
     }
+           
 }
