@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IoTClient
 {
@@ -25,9 +26,31 @@ namespace IoTClient
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Функция обновляет статус Подключенного клиента, если не подлючен то будет надпись No Connected.
+        /// </summary>
+        private void PersonStatus()
+        {
+            PersonTextBox.Text = ConWind.ConnectWindow.NewConnect.iDClient;
+            StatusRichTextBox.Document.Blocks.Clear();
+            if (IoTClient.ConWind.ConnectWindow.NewConnect.client.IsConnected) {
+                StatusRichTextBox.Document.ContentStart.InsertTextInRun("Connected");
+                StatusRichTextBox.Foreground = Brushes.Green;
+                    }
+            else
+            {
+                StatusRichTextBox.Document.ContentStart.InsertTextInRun("No Connected");
+                StatusRichTextBox.Foreground = Brushes.Red;
+            }
+        }
+        /// <summary>
+        /// Функция подписывает на событие получения сообщения от брокера и выводит его в окно TextBox
+        /// </summary>
+        private void UpDateTextBoxForm()
         {
 
+           ConWind.ConnectWindow.NewConnect.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=>TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
         }
         /// <summary>
         ///При загрузке окна сразу загружает окно авторизации на брокере.
@@ -38,14 +61,24 @@ namespace IoTClient
         {
             ConWind.ConnectWindow ConnectWindowToBroker = new ConWind.ConnectWindow();
             ConnectWindowToBroker.ShowDialog();
+            PersonStatus();
+
+            UpDateTextBoxForm();
         }
 
+        /// <summary>
+        /// Отправляет сообщение Брокеру, для управления Интернета Вещей.
+        /// </summary
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            string topic="home/ClientCommandTopic.LedArduino";
+            string topic="home.LedArduino";
             ConWind.ConnectWindow.NewConnect.SendMessage(topic,SendMessageTextBox.Text);
-            TalkToIoTtextBox.Text += DateTime.Now.ToString() + ": " + SendMessageTextBox.Text+"\n";
-
+            TalkToIoTtextBox.Text +="[" +DateTime.Now.ToString()+"]" + "  "+ConWind.ConnectWindow.NewConnect.iDClient +": " + SendMessageTextBox.Text+"\n";
+            SendMessageTextBox.Text = null;
+            PersonStatus();
         }
+        
     }
 }

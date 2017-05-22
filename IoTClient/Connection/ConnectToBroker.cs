@@ -12,19 +12,24 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IoTClient
 {
+
     /// <summary>
     /// Класс подключается к выбранному брокеру
     /// </summary>
-   public class ConnectToBroker
+    public class ConnectToBroker
     {
-       public MqttClient client;
-        Thread clientThread;
+        public delegate void ReciveMessageFromBroker(string message);
+        public event ReciveMessageFromBroker MessageFromBroker=delegate {};
+        public MqttClient client;
+        //Thread clientThread;
         string BrokerNameOfHost;
         int brokerPort;
-        string iDClient;
+       public string iDClient;
         string UserName;
         string pass;
-        public bool IsConnect = false;
+        string[] TopicsSubscribe = { "/home.StatusIoTControl" };
+
+        #region Конструктор
 
         /// <summary>
         /// Конструктор класса <see cref="ConnectToBroker" /> class.
@@ -37,34 +42,40 @@ namespace IoTClient
         public ConnectToBroker(string NameBroker, string User,
                     int portBroker, string ID, string passwordConnect)
         {
-            //clientThread=new Thread(); допилить ммногопоточность
+           
             BrokerNameOfHost = NameBroker;
             brokerPort = portBroker;
             UserName = User;
             iDClient = ID;
             pass = passwordConnect;
             client = new MqttClient(BrokerNameOfHost, brokerPort, false, null, null, MqttSslProtocols.None);
+      
         }
-
-
-        /// <summary>
-        /// Подключается к брокеру.
-        /// </summary>
-        /// <returns>Если подлючился возвращает логическое true,
-        /// Если нет то возвращается false.</returns>
-        public void StartConnect()
-        {
-            try
-            {
-                client.Connect(iDClient, UserName, pass);
-            }
-            catch (uPLibrary.Networking.M2Mqtt.Exceptions.MqttCommunicationException ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Не удалось подключиться." +
-                    "Причина:");
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-        }
+#endregion
+        #region Подключение к брокеру
+                /// <summary>
+                /// Подключается к брокеру.
+                /// </summary>
+                /// <returns>Если подлючился возвращает логическое true,
+                /// Если нет то возвращается false.</returns>
+                public void StartConnect()
+                {
+                    try
+                    {
+                        client.Connect(iDClient, UserName, pass);
+                        string[] TopikSubscribe = { "mqtt.0.home/StatusIoTControl" };
+                
+                this.ListenMessage(TopikSubscribe);
+               
+                    }
+                    catch (uPLibrary.Networking.M2Mqtt.Exceptions.MqttCommunicationException ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Не удалось подключиться." +
+                            "Причина:" + ex.Message);
+                    }
+                }
+                #endregion
+        #region Отправка сообщения
         /// <summary>
         /// Фукция отправляет публикацию сообщения на Topic брокеру.
         /// </summary>
@@ -83,7 +94,34 @@ namespace IoTClient
                 System.Windows.Forms.MessageBox.Show("Вы не подлкючены к брокеру. Подключитесь.");
                 this.StartConnect();
             }
-        }       
+        }
+        #endregion
+        #region Получать сообщения с подписаннных топиков   
+        
+        /// <summary>
+        /// Listens the message.
+        /// </summary>
+        /// <param name="Topics">The topics.</param>
+        public void ListenMessage(string [] Topics)
+        {
+            client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
+            client.Subscribe(Topics, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
+        }
+
+        /// <summary>
+        /// Handles the MqttMsgPublishReceived event of the Client control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MqttMsgPublishEventArgs"/> instance containing the event data.</param>
+        /// <exception cref="NotImplementedException"></exception>
+         void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+          
+           // System.Windows.Forms.MessageBox.Show(Encoding.ASCII.GetString(e.Message));
+            MessageFromBroker(Encoding.ASCII.GetString(e.Message));
+        
+        }
     }
-           
+#endregion    
 }
+

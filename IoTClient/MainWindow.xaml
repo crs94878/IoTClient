@@ -5,10 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IoTClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="355" Width="650" Loaded="Window_Loaded">
+        Title="MainWindow" Height="397" Width="890" Loaded="Window_Loaded">
     <Grid>
-        <TextBox x:Name="SendMessageTextBox" HorizontalAlignment="Left" Height="58" Margin="10,256,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
-        <Button x:Name="SendButton" Content="Button" HorizontalAlignment="Left" Margin="552,256,0,0" VerticalAlignment="Top" Width="75" Height="58" Click="SendButton_Click"/>
-        <TextBox x:Name="TalkToIoTtextBox" HorizontalAlignment="Left" Height="214" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="359*"/>
+            <ColumnDefinition Width="283*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="SendMessageTextBox" HorizontalAlignment="Left" Height="58" Margin="240,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" Grid.ColumnSpan="2"/>
+        <Button x:Name="SendButton" Content="Отправить" HorizontalAlignment="Left" Margin="304,297,0,0" VerticalAlignment="Top" Width="75" Height="58" Click="SendButton_Click" Grid.Column="1" ToolTip="Отправить сообщение" IsDefault="True"/>
+        <TextBox x:Name="TalkToIoTtextBox" HorizontalAlignment="Left" Height="214" Margin="240,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" Grid.ColumnSpan="2" IsReadOnlyCaretVisible="True"/>
+        <Label x:Name="Person" Content="Пользователь" Grid.Column="1" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Status" Content="Состояние" HorizontalAlignment="Left" Margin="160,41,0,0" VerticalAlignment="Top" Grid.Column="1" Width="86"/>
+        <TextBox x:Name="PersonTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="259,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" Foreground="Black" BorderBrush="{x:Null}"/>
+        <RichTextBox x:Name="StatusRichTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="259,41,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
+            <FlowDocument/>
+        </RichTextBox>
     </Grid>
 </Window>
