@@ -21,6 +21,7 @@ namespace IoTClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -50,7 +51,7 @@ namespace IoTClient
         private void UpDateTextBoxForm()
         {
 
-           ConWind.ConnectWindow.NewConnect.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=>TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
+           ConWind.ConnectWindow.NewConnect.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=> TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
         }
         /// <summary>
         ///При загрузке окна сразу загружает окно авторизации на брокере.
@@ -61,8 +62,8 @@ namespace IoTClient
         {
             ConWind.ConnectWindow ConnectWindowToBroker = new ConWind.ConnectWindow();
             ConnectWindowToBroker.ShowDialog();
+            Task.Delay(10000);
             PersonStatus();
-
             UpDateTextBoxForm();
         }
 

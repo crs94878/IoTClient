@@ -32,13 +32,23 @@ namespace IoTClient.ConWind
 
         private void StartConnect_Click(object sender, RoutedEventArgs e)
         {
-            NewConnect = new ConnectToBroker(BrokerURITextBox.Text, UserNameTextBox.Text,Convert.ToInt32(BrokerPortTextBox.Text),
+            if (IoTClient.Analize.TrueWrite.IsTrueWriteParamToConnect(BrokerURITextBox.Text, UserNameTextBox.Text, BrokerPortTextBox.Text,
+                IDtextBox.Text, PasswordTextBox.Text))
+            {
+                NewConnect = new ConnectToBroker(BrokerURITextBox.Text, UserNameTextBox.Text, Convert.ToInt32(BrokerPortTextBox.Text),
                 IDtextBox.Text, PasswordTextBox.Text);
-            NewConnect.StartConnect();
+                NewConnect.StartConnect();
+                if (IoTClient.ConWind.ConnectWindow.NewConnect.client.IsConnected)
+                {
+                    this.Close();
+                }
+            }
         }
+
 
         /// <summary>
         /// Сохраняет параметры подключения к брокеру в XML-файл.
+        /// 
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>

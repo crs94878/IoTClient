@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-using System.Net;
-using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
@@ -21,7 +18,6 @@ namespace IoTClient
         public delegate void ReciveMessageFromBroker(string message);
         public event ReciveMessageFromBroker MessageFromBroker=delegate {};
         public MqttClient client;
-        //Thread clientThread;
         string BrokerNameOfHost;
         int brokerPort;
        public string iDClient;
@@ -63,9 +59,8 @@ namespace IoTClient
                     try
                     {
                         client.Connect(iDClient, UserName, pass);
-                        string[] TopikSubscribe = { "mqtt.0.home/StatusIoTControl" };
-                
-                this.ListenMessage(TopikSubscribe);
+                        string[] TopikSubscribe = { "/home.StatusIoTControl" };
+                        this.ListenMessage(TopikSubscribe);
                
                     }
                     catch (uPLibrary.Networking.M2Mqtt.Exceptions.MqttCommunicationException ex)
@@ -92,6 +87,7 @@ namespace IoTClient
             else
             {
                 System.Windows.Forms.MessageBox.Show("Вы не подлкючены к брокеру. Подключитесь.");
+                client.Unsubscribe(TopicsSubscribe);
                 this.StartConnect();
             }
         }
@@ -117,7 +113,6 @@ namespace IoTClient
          void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
           
-           // System.Windows.Forms.MessageBox.Show(Encoding.ASCII.GetString(e.Message));
             MessageFromBroker(Encoding.ASCII.GetString(e.Message));
         
         }
