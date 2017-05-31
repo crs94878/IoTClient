@@ -12,7 +12,7 @@ namespace IoTClient.OutDate
     /// <summary>
     /// Класс используя XML сериализацию, сериализует объект параметров подключения к брокеру и десериалихует обратно
     /// </summary>
-    class XmlSaveDate
+    class XmlSaveDate : AutorizationDate
     {
             XmlSerializer xSerealizeDate;
        public AutorizationDate dateAutorization;

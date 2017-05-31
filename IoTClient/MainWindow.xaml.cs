@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using IoTClient.ConWind;
 
 namespace IoTClient
 {
@@ -21,38 +22,55 @@ namespace IoTClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
+        ConnectWindow ConnectWindowToBroker;
+
+       
+
         public MainWindow()
         {
             InitializeComponent();
+            
         }
-
-
+#region Обновление и отображение статуса пользователля
+        /// <summary>
+        /// Обновляет информацию о подключении пользователя к брокеру.
+        /// </summary>
+        /// <param name="State">Статус подключения</param>
+        private void UpdateStatus(string State,SolidColorBrush color)
+            {
+            StatusRichTextBox.Document.Blocks.Clear();
+            StatusRichTextBox.Document.ContentStart.InsertTextInRun(State);
+            StatusRichTextBox.Foreground = color;
+        }
         /// <summary>
         /// Функция обновляет статус Подключенного клиента, если не подлючен то будет надпись No Connected.
         /// </summary>
         private void PersonStatus()
         {
-            PersonTextBox.Text = ConWind.ConnectWindow.NewConnect.iDClient;
-            StatusRichTextBox.Document.Blocks.Clear();
-            if (IoTClient.ConWind.ConnectWindow.NewConnect.client.IsConnected) {
-                StatusRichTextBox.Document.ContentStart.InsertTextInRun("Connected");
-                StatusRichTextBox.Foreground = Brushes.Green;
-                    }
+            PersonTextBox.Text = ConnectWindow.NewConnect.IDClient;
+
+            if (ConnectWindow.NewConnect.RetClient.IsConnected)
+            {
+                UpdateStatus("Connect",Brushes.Green);
+            }
             else
             {
-                StatusRichTextBox.Document.ContentStart.InsertTextInRun("No Connected");
-                StatusRichTextBox.Foreground = Brushes.Red;
+                UpdateStatus("No Connected",Brushes.Red);
             }
         }
+#endregion
         /// <summary>
         /// Функция подписывает на событие получения сообщения от брокера и выводит его в окно TextBox
         /// </summary>
-        private void UpDateTextBoxForm()
+        private void UpdateControlForm()
         {
 
-           ConWind.ConnectWindow.NewConnect.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=> TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
+           Analize.ReciveMessageReWriter.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=> TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
+            ArrayIoTConnection.MonitorStatus += (iot, stat) => Dispatcher.Invoke(new Action(() => IoTRichTextbox.Document.ContentStart.InsertTextInRun(iot+"|"+stat+"\n")));// TEST
+            ConnectWindow.IsTrueClose += () => Dispatcher.Invoke(new Action(() => PersonStatus()));
         }
+
         /// <summary>
         ///При загрузке окна сразу загружает окно авторизации на брокере.
         /// </summary>
@@ -60,11 +78,16 @@ namespace IoTClient
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ConWind.ConnectWindow ConnectWindowToBroker = new ConWind.ConnectWindow();
+            UpdateStatus("No Connected",Brushes.Red);
+            ConnectWindowToBroker = new ConnectWindow();
             ConnectWindowToBroker.ShowDialog();
-            Task.Delay(10000);
-            PersonStatus();
-            UpDateTextBoxForm();
+            Task.Delay(15000);
+            if (ConnectWindowToBroker.IsTrueAndConnectToBroker == true)
+            {
+                PersonStatus();
+                UpdateControlForm();
+                
+            }
         }
 
         /// <summary>
@@ -74,12 +97,26 @@ namespace IoTClient
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            string topic="home.LedArduino";
-            ConWind.ConnectWindow.NewConnect.SendMessage(topic,SendMessageTextBox.Text);
-            TalkToIoTtextBox.Text +="[" +DateTime.Now.ToString()+"]" + "  "+ConWind.ConnectWindow.NewConnect.iDClient +": " + SendMessageTextBox.Text+"\n";
-            SendMessageTextBox.Text = null;
-            PersonStatus();
+            if (ConnectWindowToBroker.IsTrueAndConnectToBroker == true)
+            {
+                string topic = "home.LedArduino";
+                ConnectWindow.NewConnect.SendMessage(topic, SendMessageTextBox.Text);
+                TalkToIoTtextBox.Text += "[" + DateTime.Now.ToString() + "]" + "  " + ConnectWindow.NewConnect.IDClient + ": " + SendMessageTextBox.Text + "\n";
+                SendMessageTextBox.Text = null;
+                PersonStatus();
+            }
+            else
+            {
+                ConnectWindowToBroker.Dispose();
+              var result=  MessageBox.Show("Вы не подключены." + "\n" + "Подключитесь","Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
+                if(result==MessageBoxResult.OK)
+                {
+                    ConnectWindowToBroker = new ConnectWindow();
+                    ConnectWindowToBroker.ShowDialog();
+                }
+            }
         }
+
         
     }
 }

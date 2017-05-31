@@ -11,16 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace IoTClient.ConWind
 {
     /// <summary>
     /// Окно ввода параметров подключения к брокеру ConnectWindow.xaml
     /// </summary>
-    public partial class ConnectWindow : Window
+    public partial class ConnectWindow : Window, IDisposable
     {
+        public delegate void IsCloseDelegat();
+        public static event IsCloseDelegat IsTrueClose = delegate { };
         public static ConnectToBroker NewConnect;
+        bool IsTrueAndConnect = false;
         Random randId=new Random((int)DateTime.Now.Ticks);
+        private bool dispos = false;
+        private Component component;
+        public bool IsTrueAndConnectToBroker { get => IsTrueAndConnect; set { } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectWindow"/> class.
         /// </summary>
@@ -28,19 +36,36 @@ namespace IoTClient.ConWind
         {
             InitializeComponent();
             IDtextBox.Text = randId.Next(0, 9999).ToString();
-        }
+            component = new Component();
+    }
 
         private void StartConnect_Click(object sender, RoutedEventArgs e)
         {
-            if (IoTClient.Analize.TrueWrite.IsTrueWriteParamToConnect(BrokerURITextBox.Text, UserNameTextBox.Text, BrokerPortTextBox.Text,
+            if (Analize.TrueWrite.IsTrueWriteParamToConnect(BrokerURITextBox.Text, UserNameTextBox.Text, BrokerPortTextBox.Text,
                 IDtextBox.Text, PasswordTextBox.Text))
             {
-                NewConnect = new ConnectToBroker(BrokerURITextBox.Text, UserNameTextBox.Text, Convert.ToInt32(BrokerPortTextBox.Text),
-                IDtextBox.Text, PasswordTextBox.Text);
-                NewConnect.StartConnect();
-                if (IoTClient.ConWind.ConnectWindow.NewConnect.client.IsConnected)
+                try
                 {
-                    this.Close();
+                    NewConnect = new ConnectToBroker(BrokerURITextBox.Text, UserNameTextBox.Text, Convert.ToInt32(BrokerPortTextBox.Text),
+                    IDtextBox.Text, PasswordTextBox.Text);
+                    NewConnect.StartConnect();
+                   
+
+                    if (NewConnect.RetClient.IsConnected==true)
+                {
+                        
+                        IsTrueAndConnect = true;
+                        this.Close();
+                    
+                }
+                else
+                    {
+                        IsTrueAndConnect = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка в заполнении полей при подключении:" + "\n" + ex.Message,"ОШИБКА", MessageBoxButton.OK,MessageBoxImage.Error);
                 }
             }
         }
@@ -99,6 +124,21 @@ namespace IoTClient.ConWind
             }
             this.UpdateLayout();
            
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+                  GC.SuppressFinalize(this);
+        }
+        void Dispose(bool disposing)
+        {
+            if(!this.dispos)
+            {
+                if(disposing)
+                {
+                    component.Dispose();
+                }
+            }
         }
     }
 }
