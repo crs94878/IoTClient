@@ -80,10 +80,14 @@ namespace IoTClient.Analize
             }
             return true;
         }
-        public static string RegularExForSendMessage()
+        public static void RegularExForSendMessage(string Command)
         {
-            
-            return ;
+            string patternRegular = @"([a-z]{2}+ [a-z]{1}[a-z]{1}een)|([a-z]{2} [a-z]{1}[a-z]{1}een)|([a-z]{3} [a-z]{1}[a-z]{1}een)|([a-z]{2} [a-z]{1}[a-z]{3}ow)|([a-z]{3} [a-z]{1}[a-z]{3}ow)|([a-z]{2} [a-z]{1}ed)|([a-z]{3} [a-z]{1}ed)|([a-z]{3} [a-z]{1}[a-z]{2})|([a-z]{2} [a-z]{1}[a-z]{2})";
+            if(Regex.IsMatch(Command,patternRegular))
+            {
+                foreach(Match match in Regex.Matches(Command, patternRegular))
+                System.Windows.Forms.MessageBox.Show(match.Value);
+            }
         }
     }
 }

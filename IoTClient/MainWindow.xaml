@@ -20,12 +20,6 @@
         <RichTextBox x:Name="StatusRichTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="259,41,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
             <FlowDocument/>
         </RichTextBox>
-        <RichTextBox x:Name="IoTRichTextbox" HorizontalAlignment="Left" Height="214" Margin="10,79,0,0" VerticalAlignment="Top" Width="213">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text=""/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <ListBox x:Name="ListItemIoT" HorizontalAlignment="Left" Height="214" Margin="10,79,0,0" VerticalAlignment="Top" Width="225"/>
     </Grid>
 </Window>

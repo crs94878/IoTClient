@@ -22,7 +22,7 @@ namespace IoTClient
         string iDClient;
         string UserName;
         string pass;
-        string[] TopicsSubscribe = { "/home.StatusIoTControl" };
+        string[] TopicsSubscribe = { "/home.StatusIoTControl", "/home.StatusIoTConnect" };
         /// <summary>
         /// Свойсвто возвращает объект клиент класса MQTT.
         /// </summary>
@@ -149,4 +149,3 @@ namespace IoTClient
     }
 #endregion    
 }
-

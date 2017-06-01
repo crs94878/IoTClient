@@ -102,6 +102,7 @@ namespace IoTClient
                 string topic = "home.LedArduino";
                 ConnectWindow.NewConnect.SendMessage(topic, SendMessageTextBox.Text);
                 TalkToIoTtextBox.Text += "[" + DateTime.Now.ToString() + "]" + "  " + ConnectWindow.NewConnect.IDClient + ": " + SendMessageTextBox.Text + "\n";
+                Analize.TrueWrite.RegularExForSendMessage(SendMessageTextBox.Text);
                 SendMessageTextBox.Text = null;
                 PersonStatus();
             }
