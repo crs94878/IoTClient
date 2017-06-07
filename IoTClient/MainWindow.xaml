@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SendMessageTextBox" HorizontalAlignment="Left" Height="58" Margin="240,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" Grid.ColumnSpan="3"/>
         <Button x:Name="SendButton" Content="Отправить" HorizontalAlignment="Left" Margin="304,297,0,0" VerticalAlignment="Top" Width="75" Height="58" Click="SendButton_Click" Grid.Column="2" ToolTip="Отправить сообщение" IsDefault="True"/>
-        <TextBox x:Name="TalkToIoTtextBox" HorizontalAlignment="Left" Height="214" Margin="240,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" Grid.ColumnSpan="3" IsReadOnlyCaretVisible="True"/>
+        <TextBox x:Name="TalkToIoTtextBox" HorizontalAlignment="Left" Height="214" Margin="240,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" Grid.ColumnSpan="3" IsReadOnlyCaretVisible="True" VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" TextChanged="TalkToIoTtextBox_TextChanged"/>
         <Label x:Name="Person" Content="Пользователь" Grid.Column="2" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Status" Content="Состояние" HorizontalAlignment="Left" Margin="160,41,0,0" VerticalAlignment="Top" Grid.Column="2" Width="86"/>
         <TextBox x:Name="PersonTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="259,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" Foreground="Black" BorderBrush="{x:Null}"/>
@@ -21,5 +21,6 @@
             <FlowDocument/>
         </RichTextBox>
         <ListBox x:Name="ListItemIoT" HorizontalAlignment="Left" Height="214" Margin="10,79,0,0" VerticalAlignment="Top" Width="225"/>
+        <Button x:Name="ExitButton" Content="Выход" HorizontalAlignment="Left" Margin="10,336,0,0" VerticalAlignment="Top" Width="75" Click="ExitButton_Click"/>
     </Grid>
 </Window>

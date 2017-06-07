@@ -29,13 +29,9 @@ namespace IoTClient.Analize
     /// <param name="MessageRecived">Сообщение</param>
         public static void MessageReWriter(string MessFromTop, string MessageRecived)
         {
-            if (MessFromTop == "/home.StatusIoT")
+            if (MessFromTop == "/home.StatusIoTConnect")
             {
                 MonitorStatusConnect(MessageRecived);
-            }
-            else if (MessFromTop == "/info.connection")
-            {
-                ArrayIoTConnection.AllIoTFromBroker(MessageRecived);
             }
             else
             {
@@ -51,7 +47,7 @@ namespace IoTClient.Analize
             string Mess;
             string IoThings;
             IoThings = StatusConnect.Substring(0,StatusConnect.IndexOf(":"));
-            Mess = StatusConnect.Substring(StatusConnect.IndexOf(":"));
+            Mess = StatusConnect.Substring(StatusConnect.IndexOf(":")+1);
             ArrayIoTConnection.IoTStatusRecive(IoThings,Mess);
         }
       

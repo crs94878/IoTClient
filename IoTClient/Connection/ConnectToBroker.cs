@@ -22,7 +22,7 @@ namespace IoTClient
         string iDClient;
         string UserName;
         string pass;
-        string[] TopicsSubscribe = { "/home.StatusIoTControl", "/home.StatusIoTConnect" };
+        string[] TopicsSubscribe = { "/home.StatusIoTControl", "/home.StatusIoTConnect" , "/info.connection" };
         /// <summary>
         /// Свойсвто возвращает объект клиент класса MQTT.
         /// </summary>
@@ -124,7 +124,7 @@ namespace IoTClient
             try
             {
                 client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
-                client.Subscribe(Topics, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
+                client.Subscribe(Topics, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
             } catch(Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);

@@ -116,7 +116,6 @@ namespace IoTClient.ConWind
         {
             BrokerURITextBox.Text = null;
             UserNameTextBox.Text = null;
-            List<TextBox> listTextBox = new List<TextBox>();
             TextBox[] textBox= { BrokerURITextBox, UserNameTextBox, UserNameTextBox, BrokerPortTextBox, PasswordTextBox};
             foreach(var _box in textBox)
             {

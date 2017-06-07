@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="IoTClient.Analize.ReciveMessageReWriter" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IoTClient.App" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
-      <FileName>Analize\ReciveMessageReWriter.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IoTClient.Analize.TrueWrite" Collapsed="true">
-    <Position X="0.75" Y="1.75" Width="1.5" />
+  <Class Name="IoTClient.ArrayIoTConnection" Collapsed="true">
+    <Position X="5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Analize\TrueWrite.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAADQAIAAAAAAAEAAA=</HashCode>
+      <FileName>Connection\ArrayIoTConnection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IoTClient.ConnectToBroker" Collapsed="true">
-    <Position X="9.75" Y="1.75" Width="1.5" />
+    <Position X="3" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAEACAATAAIAAAAAAAAgQBABAAAAAA=</HashCode>
       <FileName>Connection\ConnectToBroker.cs</FileName>
@@ -23,101 +23,98 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="IoTClient.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="3.75" Width="1.5" />
+    <Position X="10.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAEAAAAAAAAAIAAAAgAIAAAAAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAgAEBAAAAAAIAIQAACgAoAAAAAAAAAAABAAAAAI=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="IoTClient.Analize.ReciveMessageReWriter" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Analize\ReciveMessageReWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IoTClient.Analize.TrueWrite" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAABBAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Analize\TrueWrite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IoTClient.Connection.ArrayIoT" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAgAAAAAAAQAAAAAEAAAAAAADAAAAAA=</HashCode>
+      <FileName>Connection\ArrayIoT.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="IoTClient.ConWind.ConnectWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="5.75" Width="1.5" />
+    <Position X="12.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAACAEAAAQAAAAAAAIAAABAgAAAAAAAAEAUAA=</HashCode>
       <FileName>Connection\ConnectWindow.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="IoTClient.OutDate.AutorizationDate" Collapsed="true">
-    <Position X="5.25" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAACAAAAAAAAAAAAAAgAAAAAAgAAAAA=</HashCode>
       <FileName>OutDate\AutorizationDate.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IoTClient.OutDate.XmlSaveDate" Collapsed="true">
-    <Position X="5.25" Y="3" Width="1.5" />
+    <Position X="1" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEBAAAAAAAAAAAAAAAAAAAAAAABAAAAgAAAAAAAAAA=</HashCode>
       <FileName>OutDate\XmlSaveDate.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IoTClient.Properties.Resources" Collapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="8.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="System.Object" Collapsed="true">
-    <Position X="5.25" Y="0.5" Width="1.5" />
+    <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier />
   </Class>
+  <Class Name="System.Windows.Application" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
   <Class Name="System.Windows.Window" Collapsed="true">
-    <Position X="3.25" Y="5.25" Width="1.5" />
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Threading.DispatcherObject" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="System.Windows.Controls.ContentControl" Collapsed="true">
-    <Position X="5.5" Y="5.25" Width="1.5" />
+    <Position X="6.5" Y="4.75" Width="1.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="System.Windows.Controls.Control" Collapsed="true">
-    <Position X="7.5" Y="5.25" Width="1.5" />
+    <Position X="4.5" Y="4.75" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="System.Windows.FrameworkElement" Collapsed="true">
-    <Position X="9.5" Y="5.25" Width="1.5" />
+    <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="System.Windows.UIElement" Collapsed="true">
-    <Position X="11.25" Y="5.25" Width="1.5" />
-    <InheritanceLine Type="System.Windows.Media.Visual" FixedToPoint="true">
-      <Path>
-        <Point X="13.75" Y="5.25" />
-        <Point X="13.75" Y="5.096" />
-        <Point X="12.75" Y="5.096" />
-        <Point X="12.75" Y="5.25" />
-      </Path>
-    </InheritanceLine>
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="System.Windows.Media.Visual" Collapsed="true">
-    <Position X="13" Y="5.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="System.Windows.DependencyObject" Collapsed="true">
-    <Position X="13" Y="4.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="System.Windows.Threading.DispatcherObject" Collapsed="true">
-    <Position X="12.25" Y="2.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="IoTClient.ArrayIoTConnection" Collapsed="true">
-    <Position X="8" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>Connection\ArrayIoTConnection.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Interface Name="IoTClient.Connection.IConnectToBroker" Collapsed="true">
-    <Position X="12" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAACAADAAAAAAAAAAAgABAAAAAAAA=</HashCode>
-      <FileName>Connection\IConnectToBroker.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

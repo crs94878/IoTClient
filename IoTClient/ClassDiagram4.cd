@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IoTClient.OutDate.AutorizationDate">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAACAAAAAAAAAAAAAAgAAAAAAgAAAAA=</HashCode>
+      <FileName>OutDate\AutorizationDate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IoTClient.OutDate.XmlSaveDate">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAAAAAAAAAAAAAAAAAAAABAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>OutDate\XmlSaveDate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="xSerealizeDate" />
+      <Field Name="dateAutorization" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Xml.Serialization.XmlSerializer" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

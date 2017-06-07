@@ -24,7 +24,9 @@ namespace IoTClient
     {
 
         ConnectWindow ConnectWindowToBroker;
-
+        Image imageStatus;
+        string OnlineImage= @"C:\Users\Shel\Documents\Visual Studio 2017\Projects\IoTClient\IoTClient\OkConnect.png";
+        string OffLineImage= @"C:\Users\Shel\Documents\Visual Studio 2017\Projects\IoTClient\IoTClient\OFFConnect.png";
        
 
         public MainWindow()
@@ -62,36 +64,70 @@ namespace IoTClient
 #endregion
         /// <summary>
         /// Функция подписывает на событие получения сообщения от брокера и выводит его в окно TextBox
+        /// так же подписываает на события подключенных к брокеру клиентов.
         /// </summary>
         private void UpdateControlForm()
         {
-
-           Analize.ReciveMessageReWriter.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(()=> TalkToIoTtextBox.Text +="["+DateTime.Now.ToString()+"]"+": " + str+"\n" ));
-            ArrayIoTConnection.MonitorStatus += (iot, stat) => Dispatcher.Invoke(new Action(() => IoTRichTextbox.Document.ContentStart.InsertTextInRun(iot+"|"+stat+"\n")));// TEST
+        
+           Analize.ReciveMessageReWriter.MessageFromBroker += (str) => Dispatcher.Invoke(new Action(() => TalkToIoTtextBox.Text += "[" + DateTime.Now.ToString() + "]" + " " + str + "\n" ));
+            ArrayIoTConnection.MonitorStatus += (iot) => Dispatcher.Invoke(new Action(() =>TheAllIoTConnected(iot) ));// TEST
             ConnectWindow.IsTrueClose += () => Dispatcher.Invoke(new Action(() => PersonStatus()));
         }
 
+
         /// <summary>
-        ///При загрузке окна сразу загружает окно авторизации на брокере.
+        /// Thes all io t connected.
+        /// </summary>
+        /// <param name="Iot">The iot.</param>
+       private void TheAllIoTConnected(List<Connection.ArrayIoT>  AllIot)
+        {
+            ListItemIoT.Items.Clear();
+
+            foreach (var f in AllIot)
+            {
+                if (f.State == "Connected")
+                {
+
+
+                    ListItemIoT.Items.Add(new Label() { Content = "Name:  " + f.Name + "\nStatus: " + f.State, Foreground = Brushes.Green });                  
+                }
+                else 
+                {
+                    ListItemIoT.Items.Add(new Label() { Content = "Name:  " + f.Name + "\nStatus: " +f.State,Foreground=Brushes.Red });
+                }
+            }
+  
+
+
+        }
+        /// <summary>
+        ///При загрузке окна сразу загружает окно авторизации на брокере
+        ///Все настройки и запускает поток таймера для проверки подключения к брокеру.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ListItemIoT.SelectionMode = SelectionMode.Multiple;
             UpdateStatus("No Connected",Brushes.Red);
             ConnectWindowToBroker = new ConnectWindow();
             ConnectWindowToBroker.ShowDialog();
             Task.Delay(15000);
             if (ConnectWindowToBroker.IsTrueAndConnectToBroker == true)
             {
+               
                 PersonStatus();
                 UpdateControlForm();
+                ArrayIoTConnection.TimerStartToUpdate();
                 
+
             }
         }
 
         /// <summary>
         /// Отправляет сообщение Брокеру, для управления Интернета Вещей.
+        /// Если подключение было выполенено то можно продолжать управление Интернета Вещей, если нет-то 
+        /// появится окно предупреждения, и будет повторно открыто окно повторного подключения.
         /// </summary
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
@@ -99,8 +135,7 @@ namespace IoTClient
         {
             if (ConnectWindowToBroker.IsTrueAndConnectToBroker == true)
             {
-                string topic = "home.LedArduino";
-                ConnectWindow.NewConnect.SendMessage(topic, SendMessageTextBox.Text);
+               
                 TalkToIoTtextBox.Text += "[" + DateTime.Now.ToString() + "]" + "  " + ConnectWindow.NewConnect.IDClient + ": " + SendMessageTextBox.Text + "\n";
                 Analize.TrueWrite.RegularExForSendMessage(SendMessageTextBox.Text);
                 SendMessageTextBox.Text = null;
@@ -118,6 +153,18 @@ namespace IoTClient
             }
         }
 
-        
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectWindow.NewConnect.RetClient.Disconnect();
+            ArrayIoTConnection.Timer.Stop();
+            ConnectWindowToBroker.Dispose();
+            this.Close();
+        }
+
+        private void TalkToIoTtextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TalkToIoTtextBox.SelectionStart = TalkToIoTtextBox.Text.Length;
+            TalkToIoTtextBox.ScrollToEnd();
+        }
     }
 }
